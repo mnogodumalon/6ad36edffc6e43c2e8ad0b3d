@@ -1,0 +1,800 @@
+# Scaffold key file contents — part 1/4.
+Same rule as .scaffold_context: these files are pre-generated; never Read the source files themselves.
+
+## src/types/app.ts
+```
+import { lookupLabel } from '@/i18n';
+
+// AUTOMATICALLY GENERATED TYPES - DO NOT EDIT
+
+export type LookupValue = { key: string; label: string };
+/** A raw record URL (applookup reference). NEVER render this directly
+ *  in JSX — it is a URL, not a display value. Show the enriched `*Name`
+ *  field or resolve it via the entity map instead. Assignable to/from
+ *  string everywhere; the `& {}` keeps the alias NAME visible in tsc
+ *  error messages (a plain primitive alias gets normalized away). */
+export type RecordUrl = string & {};
+export type GeoLocation = { lat: number; long: number; info?: string };
+
+export type AttachmentType = 'file' | 'note' | 'url' | 'json';
+export interface Attachment {
+  id: string;
+  type: AttachmentType;
+  label: string | null;
+  value: string | null;
+  active: boolean;
+  createdat?: string | null;
+  updatedat?: string | null;
+}
+
+export interface AttachmentInput {
+  type: AttachmentType;
+  label?: string;
+  value: string;
+  active?: boolean;
+}
+
+export interface Kunden {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    kundennummer?: string;
+    firmenname?: string;
+    ansprechpartner_vorname?: string;
+    ansprechpartner_nachname?: string;
+    e_mail?: string;
+    telefon?: string;
+    strasse?: string;
+    hausnummer?: string;
+    plz?: string;
+    ort?: string;
+    branche?: string;
+    interne_bemerkung?: string;
+    aktiv?: boolean;
+  };
+}
+
+export interface Kundenanfragen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    urspruengliche_kundenanforderungen?: string;
+    prioritaet?: LookupValue;
+    verantwortlicher?: string;
+    status?: LookupValue;
+    technischer_klaeraufwand?: LookupValue;
+    zieltermin_klaerung?: string; // Format: YYYY-MM-DD oder ISO String
+    vollstaendigkeit?: LookupValue;
+    hinweise_erneute_pruefung?: boolean;
+    aktive_bearbeitungszeit_min?: number;
+    wartezeit_kunde_min?: number;
+    wartezeit_intern_min?: number;
+    nacharbeiten_anzahl?: number;
+    klaerung_abgeschlossen_am?: string; // Format: YYYY-MM-DD oder ISO String
+    anfragenummer?: string;
+    kunde?: RecordUrl; // applookup -> URL zu 'Kunden' Record
+    eingangsdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    eingangskanal?: LookupValue;
+    kundenreferenz?: string;
+    produkt_oder_produktfamilie?: string;
+    produktvariante?: string;
+    gewuenschte_menge?: number;
+    gewuenschter_liefertermin?: string; // Format: YYYY-MM-DD oder ISO String
+    anfragebeschreibung?: string;
+  };
+}
+
+export interface AbschlussUndUebergabe {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    pruefdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    geprueft_von?: string;
+    anforderungen_geprueft?: boolean;
+    kritische_punkte_geklaert?: boolean;
+    erforderliche_entscheidungen_vorhanden?: boolean;
+    erforderliche_freigaben_vorhanden?: boolean;
+    verbleibende_abweichungen?: string;
+    uebergabeempfaenger?: string;
+    uebergabestatus?: LookupValue;
+    verbleibende_risiken?: string;
+    uebergabedatum?: string; // Format: YYYY-MM-DD oder ISO String
+    zusammenfassung?: string;
+    freigabestatus?: LookupValue;
+  };
+}
+
+export interface Informationsquellen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    quellentyp?: LookupValue;
+    titel?: string;
+    datei?: string;
+    referenz_url?: string;
+    absender_oder_urheber?: string;
+    quellendatum?: string; // Format: YYYY-MM-DD oder ISO String
+    eingangsdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    versionskennung?: string;
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    quellenstatus?: LookupValue;
+    zusammenfassung?: string;
+    extraktionsstatus?: LookupValue;
+    pruefung_durch?: string;
+    pruefung_am?: string; // Format: YYYY-MM-DD oder ISO String
+    erneute_pruefung_erforderlich?: boolean;
+    bemerkung?: string;
+    ersetzt_quelle?: RecordUrl; // applookup -> URL zu 'Informationsquellen' Record
+  };
+}
+
+export interface TechnischeAnforderungen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    quellen?: RecordUrl[];
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    bezeichnung?: string;
+    beschreibung?: string;
+    anforderungstyp?: LookupValue;
+    ursprung?: LookupValue;
+    sollwert?: string;
+    einheit?: string;
+    vergleichsoperator?: LookupValue;
+    min_wert?: number;
+    max_wert?: number;
+    ist_pflichtanforderung?: boolean;
+    pruefstatus?: LookupValue;
+    begruendung_pruefstatus?: string;
+    verantwortlicher?: string;
+    gueltig_ab?: string; // Format: YYYY-MM-DD oder ISO String
+    gueltig_bis?: string; // Format: YYYY-MM-DD oder ISO String
+    erneute_pruefung_erforderlich?: boolean;
+    letzte_aenderung?: string; // Format: YYYY-MM-DD oder ISO String
+  };
+}
+
+export interface OffenePunkte {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    betroffene_anforderungen?: RecordUrl[];
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    kurztitel?: string;
+    beschreibung?: string;
+    punktetyp?: LookupValue;
+    prioritaet?: LookupValue;
+    auswirkung?: LookupValue;
+    zustaendige_rolle?: LookupValue;
+    verantwortlicher?: string;
+    faellig_am?: string; // Format: YYYY-MM-DD oder ISO String
+    status?: LookupValue;
+    erledigungskriterium?: string;
+    antwort_geprueft?: boolean;
+    erneute_pruefung_erforderlich?: boolean;
+    loesung_oder_ergebnis?: string;
+    abgeschlossen_am?: string; // Format: YYYY-MM-DD oder ISO String
+    abschluss_durch?: string;
+    betroffene_quellen?: RecordUrl[];
+  };
+}
+
+export interface Aufgaben {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    offener_punkt?: RecordUrl; // applookup -> URL zu 'OffenePunkte' Record
+    abhaengige_aufgaben?: RecordUrl[];
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    titel?: string;
+    beschreibung?: string;
+    aufgabentyp?: LookupValue;
+    verantwortlicher?: string;
+    mitwirkende?: string;
+    prioritaet?: LookupValue;
+    status?: LookupValue;
+    faellig_am?: string; // Format: YYYY-MM-DD oder ISO String
+    blockierungsgrund?: string;
+    ergebnis?: string;
+    aktive_zeit_min?: number;
+    wartezeit_min?: number;
+    abgeschlossen_am?: string; // Format: YYYY-MM-DD oder ISO String
+  };
+}
+
+export interface Beurteilungen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    beurteilungsgegenstand?: string;
+    beurteilungsart?: LookupValue;
+    fachliche_begruendung?: string;
+    annahmen?: string;
+    einschaetzung?: LookupValue;
+    unsicherheiten?: string;
+    alternativen?: string;
+    empfehlung?: string;
+    ist_ki_vorschlag?: boolean;
+    erstellt_von?: string;
+    erstellt_am?: string; // Format: YYYY-MM-DD oder ISO String
+    pruefstatus?: LookupValue;
+    geprueft_von?: string;
+    geprueft_am?: string; // Format: YYYY-MM-DD oder ISO String
+    erneute_pruefung_erforderlich?: boolean;
+    betroffene_anforderungen?: RecordUrl[];
+    betroffene_offene_punkte?: RecordUrl[];
+    zugrunde_liegende_quellen?: RecordUrl[];
+    zugrunde_liegende_anforderungen?: RecordUrl[];
+  };
+}
+
+export interface RueckfragenUndKommunikation {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    offener_punkt?: RecordUrl; // applookup -> URL zu 'OffenePunkte' Record
+    zugehoerige_offene_punkte?: RecordUrl[];
+    beantwortete_kommunikation?: RecordUrl; // applookup -> URL zu 'RueckfragenUndKommunikation' Record
+    quelle?: RecordUrl; // applookup -> URL zu 'Informationsquellen' Record
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    kommunikationstyp?: LookupValue;
+    kanal?: LookupValue;
+    absender?: string;
+    empfaenger?: string;
+    betreff?: string;
+    inhalt?: string;
+    versandstatus?: LookupValue;
+    versanddatum?: string; // Format: YYYY-MM-DD oder ISO String
+    antwort_erwartet_bis?: string; // Format: YYYY-MM-DD oder ISO String
+    antwort_erhalten_am?: string; // Format: YYYY-MM-DD oder ISO String
+    antwortstatus?: LookupValue;
+    notizen?: string;
+  };
+}
+
+export interface Entscheidungen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    titel?: string;
+    entscheidungsgegenstand?: string;
+    entscheidungstyp?: LookupValue;
+    alternativen?: string;
+    entscheidung?: string;
+    begruendung?: string;
+    entscheidungsverantwortlicher?: string;
+    entscheidungskompetenz_geprueft?: boolean;
+    entscheidungsstatus?: LookupValue;
+    entscheidungsdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    auflagen?: string;
+    gueltig_bis?: string; // Format: YYYY-MM-DD oder ISO String
+    ergebnis?: string;
+    betroffene_anforderungen?: RecordUrl[];
+    betroffene_offene_punkte?: RecordUrl[];
+    zugrunde_liegende_beurteilungen?: RecordUrl[];
+    ersetzt_durch_entscheidung?: RecordUrl; // applookup -> URL zu 'Entscheidungen' Record
+  };
+}
+
+export interface ErfahrungenUndErkenntnisse {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    belegquellen?: RecordUrl[];
+    belegbeurteilungen?: RecordUrl[];
+    belegentscheidungen?: RecordUrl[];
+    titel?: string;
+    sachverhalt?: string;
+    erfahrungstyp?: LookupValue;
+    produkt_oder_produktfamilie?: string;
+    anforderungstyp?: string;
+    schlagwoerter?: string;
+    ursprungs_anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    urspruengliches_problem?: string;
+    vorgehen?: string;
+    beobachtetes_ergebnis?: string;
+    erkenntnis?: string;
+    gueltigkeitsbedingungen?: string;
+    bekannte_grenzen?: string;
+    risiko_der_uebertragung?: LookupValue;
+    bestaetigungsstatus?: LookupValue;
+    bestaetigt_von?: string;
+    bestaetigt_am?: string; // Format: YYYY-MM-DD oder ISO String
+    gueltig_ab?: string; // Format: YYYY-MM-DD oder ISO String
+    gueltig_bis?: string; // Format: YYYY-MM-DD oder ISO String
+    wiederverwendungsstatus?: LookupValue;
+    kommentar_zur_wiederverwendung?: string;
+  };
+}
+
+export interface WiederverwendungVonErfahrungen {
+  record_id: string;
+  /** The API field. */
+  created_at: string;
+  updated_at: string | null;
+  /** Alias of created_at, filled by the read helpers. The API sends
+   *  snake_case only — reading `createdat` off a raw record yields
+   *  undefined, which type-checks and then crashes at runtime. */
+  createdat: string;
+  updatedat: string | null;
+  fields: {
+    aufwandsersparnis_schaetzung_min?: number;
+    tatsaechliche_aufwandsersparnis_min?: number;
+    negative_folgen?: string;
+    bewertet_am?: string; // Format: YYYY-MM-DD oder ISO String
+    ziel_anfrage?: RecordUrl; // applookup -> URL zu 'Kundenanfragen' Record
+    abrufdatum?: string; // Format: YYYY-MM-DD oder ISO String
+    abrufgrund?: string;
+    aehnlichkeitseinschaetzung?: LookupValue;
+    kontextunterschiede?: string;
+    gueltigkeit_geprueft?: boolean;
+    geprueft_von?: string;
+    verwendungsergebnis?: LookupValue;
+    begruendung?: string;
+    beobachteter_nutzen?: string;
+    erfahrung?: RecordUrl; // applookup -> URL zu 'ErfahrungenUndErkenntnisse' Record
+  };
+}
+
+export const APP_IDS = {
+  KUNDEN: '6ad36e9eac6687d3c66ee837',
+  KUNDENANFRAGEN: '6ad36ea588ea187cc38149b6',
+  ABSCHLUSS_UND_UEBERGABE: '6ad36ea63a6dad34d4a48433',
+  INFORMATIONSQUELLEN: '6ad36ea795457907d694b846',
+  TECHNISCHE_ANFORDERUNGEN: '6ad36ea764e9df6407f448a0',
+  OFFENE_PUNKTE: '6ad36ea8867261833e338f1b',
+  AUFGABEN: '6ad36ea9809c835435cef8c1',
+  BEURTEILUNGEN: '6ad36ea9526e7f9d341bc8ff',
+  RUECKFRAGEN_UND_KOMMUNIKATION: '6ad36eaae7395e6b718022a5',
+  ENTSCHEIDUNGEN: '6ad36eaa7a6c94e718236860',
+  ERFAHRUNGEN_UND_ERKENNTNISSE: '6ad36eab3feb7a28c86eba9d',
+  WIEDERVERWENDUNG_VON_ERFAHRUNGEN: '6ad36eac5608cadd0ec823bc',
+} as const;
+
+
+export const LOOKUP_OPTIONS: Record<string, Record<string, {key: string, label: string}[]>> = {
+  'kundenanfragen': {
+    prioritaet: [{ key: "niedrig", get label() { return lookupLabel('kundenanfragen', 'prioritaet', "niedrig") ?? "Niedrig"; } }, { key: "normal", get label() { return lookupLabel('kundenanfragen', 'prioritaet', "normal") ?? "Normal"; } }, { key: "hoch", get label() { return lookupLabel('kundenanfragen', 'prioritaet', "hoch") ?? "Hoch"; } }, { key: "kritisch", get label() { return lookupLabel('kundenanfragen', 'prioritaet', "kritisch") ?? "Kritisch"; } }],
+    status: [{ key: "neu", get label() { return lookupLabel('kundenanfragen', 'status', "neu") ?? "Neu"; } }, { key: "in_pruefung", get label() { return lookupLabel('kundenanfragen', 'status', "in_pruefung") ?? "In Prüfung"; } }, { key: "rueckfragen_offen", get label() { return lookupLabel('kundenanfragen', 'status', "rueckfragen_offen") ?? "Rückfragen offen"; } }, { key: "fachliche_pruefung", get label() { return lookupLabel('kundenanfragen', 'status', "fachliche_pruefung") ?? "Fachliche Prüfung"; } }, { key: "entscheidungsbedarf", get label() { return lookupLabel('kundenanfragen', 'status', "entscheidungsbedarf") ?? "Entscheidungsbedarf"; } }, { key: "technisch_geklaert", get label() { return lookupLabel('kundenanfragen', 'status', "technisch_geklaert") ?? "Technisch geklärt"; } }, { key: "freigegeben", get label() { return lookupLabel('kundenanfragen', 'status', "freigegeben") ?? "Freigegeben"; } }, { key: "abgelehnt", get label() { return lookupLabel('kundenanfragen', 'status', "abgelehnt") ?? "Abgelehnt"; } }, { key: "zurueckgestellt", get label() { return lookupLabel('kundenanfragen', 'status', "zurueckgestellt") ?? "Zurückgestellt"; } }],
+    technischer_klaeraufwand: [{ key: "klein", get label() { return lookupLabel('kundenanfragen', 'technischer_klaeraufwand', "klein") ?? "Klein"; } }, { key: "mittel", get label() { return lookupLabel('kundenanfragen', 'technischer_klaeraufwand', "mittel") ?? "Mittel"; } }, { key: "hoch", get label() { return lookupLabel('kundenanfragen', 'technischer_klaeraufwand', "hoch") ?? "Hoch"; } }, { key: "unbekannt", get label() { return lookupLabel('kundenanfragen', 'technischer_klaeraufwand', "unbekannt") ?? "Noch unbekannt"; } }],
+    vollstaendigkeit: [{ key: "ungeprueft", get label() { return lookupLabel('kundenanfragen', 'vollstaendigkeit', "ungeprueft") ?? "Ungeprüft"; } }, { key: "unvollstaendig", get label() { return lookupLabel('kundenanfragen', 'vollstaendigkeit', "unvollstaendig") ?? "Unvollständig"; } }, { key: "in_klaerung", get label() { return lookupLabel('kundenanfragen', 'vollstaendigkeit', "in_klaerung") ?? "In Klärung"; } }, { key: "vollstaendig_geprueft", get label() { return lookupLabel('kundenanfragen', 'vollstaendigkeit', "vollstaendig_geprueft") ?? "Vollständig geprüft"; } }],
+    eingangskanal: [{ key: "webformular", get label() { return lookupLabel('kundenanfragen', 'eingangskanal', "webformular") ?? "Webformular"; } }, { key: "telefon", get label() { return lookupLabel('kundenanfragen', 'eingangskanal', "telefon") ?? "Telefon"; } }, { key: "persoenlich", get label() { return lookupLabel('kundenanfragen', 'eingangskanal', "persoenlich") ?? "Persönliches Gespräch"; } }, { key: "bestandskunde", get label() { return lookupLabel('kundenanfragen', 'eingangskanal', "bestandskunde") ?? "Bestandskunde"; } }, { key: "sonstiger", get label() { return lookupLabel('kundenanfragen', 'eingangskanal', "sonstiger") ?? "Sonstiger Kanal"; } }, { key: "email", get label() { return lookupLabel('kundenanfragen', 'eingangskanal', "email") ?? "E-Mail"; } }],
+  },
+  'abschluss_und_uebergabe': {
+    uebergabestatus: [{ key: "nicht_vorbereitet", get label() { return lookupLabel('abschluss_und_uebergabe', 'uebergabestatus', "nicht_vorbereitet") ?? "Nicht vorbereitet"; } }, { key: "bereit", get label() { return lookupLabel('abschluss_und_uebergabe', 'uebergabestatus', "bereit") ?? "Bereit zur Übergabe"; } }, { key: "uebergeben", get label() { return lookupLabel('abschluss_und_uebergabe', 'uebergabestatus', "uebergeben") ?? "Übergeben"; } }, { key: "zurueckgewiesen", get label() { return lookupLabel('abschluss_und_uebergabe', 'uebergabestatus', "zurueckgewiesen") ?? "Zurückgewiesen"; } }],
+    freigabestatus: [{ key: "nicht_freigegeben", get label() { return lookupLabel('abschluss_und_uebergabe', 'freigabestatus', "nicht_freigegeben") ?? "Nicht freigegeben"; } }, { key: "freigegeben", get label() { return lookupLabel('abschluss_und_uebergabe', 'freigabestatus', "freigegeben") ?? "Freigegeben"; } }, { key: "verweigert", get label() { return lookupLabel('abschluss_und_uebergabe', 'freigabestatus', "verweigert") ?? "Freigabe verweigert"; } }, { key: "zurueckgestellt", get label() { return lookupLabel('abschluss_und_uebergabe', 'freigabestatus', "zurueckgestellt") ?? "Zurückgestellt"; } }],
+  },
+  'informationsquellen': {
+    quellentyp: [{ key: "email", get label() { return lookupLabel('informationsquellen', 'quellentyp', "email") ?? "E-Mail"; } }, { key: "pdf", get label() { return lookupLabel('informationsquellen', 'quellentyp', "pdf") ?? "PDF"; } }, { key: "office", get label() { return lookupLabel('informationsquellen', 'quellentyp', "office") ?? "Office-Dokument"; } }, { key: "bild", get label() { return lookupLabel('informationsquellen', 'quellentyp', "bild") ?? "Bild"; } }, { key: "zeichnung", get label() { return lookupLabel('informationsquellen', 'quellentyp', "zeichnung") ?? "Zeichnung"; } }, { key: "cad", get label() { return lookupLabel('informationsquellen', 'quellentyp', "cad") ?? "CAD-Dokument"; } }, { key: "webadresse", get label() { return lookupLabel('informationsquellen', 'quellentyp', "webadresse") ?? "Webadresse"; } }, { key: "gespraechsnotiz", get label() { return lookupLabel('informationsquellen', 'quellentyp', "gespraechsnotiz") ?? "Gesprächsnotiz"; } }, { key: "erp", get label() { return lookupLabel('informationsquellen', 'quellentyp', "erp") ?? "ERP-Datensatz"; } }, { key: "manuell", get label() { return lookupLabel('informationsquellen', 'quellentyp', "manuell") ?? "Manuelle Eingabe"; } }, { key: "sonstige", get label() { return lookupLabel('informationsquellen', 'quellentyp', "sonstige") ?? "Sonstige Quelle"; } }],
+    quellenstatus: [{ key: "aktuell", get label() { return lookupLabel('informationsquellen', 'quellenstatus', "aktuell") ?? "Aktuell"; } }, { key: "ersetzt", get label() { return lookupLabel('informationsquellen', 'quellenstatus', "ersetzt") ?? "Ersetzt"; } }, { key: "ungeprueft", get label() { return lookupLabel('informationsquellen', 'quellenstatus', "ungeprueft") ?? "Ungeprüft"; } }, { key: "strittig", get label() { return lookupLabel('informationsquellen', 'quellenstatus', "strittig") ?? "Strittig"; } }, { key: "ungueltig", get label() { return lookupLabel('informationsquellen', 'quellenstatus', "ungueltig") ?? "Ungültig"; } }],
+    extraktionsstatus: [{ key: "nicht_verarbeitet", get label() { return lookupLabel('informationsquellen', 'extraktionsstatus', "nicht_verarbeitet") ?? "Nicht verarbeitet"; } }, { key: "in_bearbeitung", get label() { return lookupLabel('informationsquellen', 'extraktionsstatus', "in_bearbeitung") ?? "In Bearbeitung"; } }, { key: "extrahiert", get label() { return lookupLabel('informationsquellen', 'extraktionsstatus', "extrahiert") ?? "Extrahiert"; } }, { key: "manuell_geprueft", get label() { return lookupLabel('informationsquellen', 'extraktionsstatus', "manuell_geprueft") ?? "Manuell geprüft"; } }, { key: "fehler", get label() { return lookupLabel('informationsquellen', 'extraktionsstatus', "fehler") ?? "Fehler"; } }],
+  },
+  'technische_anforderungen': {
+    anforderungstyp: [{ key: "abmessung", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "abmessung") ?? "Abmessung"; } }, { key: "material", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "material") ?? "Material"; } }, { key: "leistung", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "leistung") ?? "Leistung"; } }, { key: "funktion", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "funktion") ?? "Funktion"; } }, { key: "schnittstelle", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "schnittstelle") ?? "Schnittstelle"; } }, { key: "norm", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "norm") ?? "Norm"; } }, { key: "sicherheit", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "sicherheit") ?? "Sicherheit"; } }, { key: "umweltbedingung", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "umweltbedingung") ?? "Umweltbedingung"; } }, { key: "qualitaet", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "qualitaet") ?? "Qualität"; } }, { key: "liefertermin", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "liefertermin") ?? "Liefertermin"; } }, { key: "dokumentation", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "dokumentation") ?? "Dokumentation"; } }, { key: "sonstiges", get label() { return lookupLabel('technische_anforderungen', 'anforderungstyp', "sonstiges") ?? "Sonstiges"; } }],
+    ursprung: [{ key: "kundenangabe", get label() { return lookupLabel('technische_anforderungen', 'ursprung', "kundenangabe") ?? "Explizite Kundenangabe"; } }, { key: "kundenunterlage", get label() { return lookupLabel('technische_anforderungen', 'ursprung', "kundenunterlage") ?? "Kundenunterlage"; } }, { key: "interne_vorgabe", get label() { return lookupLabel('technische_anforderungen', 'ursprung', "interne_vorgabe") ?? "Interne Vorgabe"; } }, { key: "ableitung", get label() { return lookupLabel('technische_anforderungen', 'ursprung', "ableitung") ?? "Technische Ableitung"; } }, { key: "erfahrungswissen", get label() { return lookupLabel('technische_anforderungen', 'ursprung', "erfahrungswissen") ?? "Erfahrungswissen"; } }, { key: "ki_vorschlag", get label() { return lookupLabel('technische_anforderungen', 'ursprung', "ki_vorschlag") ?? "KI-Vorschlag"; } }],
+    vergleichsoperator: [{ key: "gleich", get label() { return lookupLabel('technische_anforderungen', 'vergleichsoperator', "gleich") ?? "Gleich"; } }, { key: "groesser", get label() { return lookupLabel('technische_anforderungen', 'vergleichsoperator', "groesser") ?? "Größer als"; } }, { key: "groesser_gleich", get label() { return lookupLabel('technische_anforderungen', 'vergleichsoperator', "groesser_gleich") ?? "Größer oder gleich"; } }, { key: "kleiner", get label() { return lookupLabel('technische_anforderungen', 'vergleichsoperator', "kleiner") ?? "Kleiner als"; } }, { key: "kleiner_gleich", get label() { return lookupLabel('technische_anforderungen', 'vergleichsoperator', "kleiner_gleich") ?? "Kleiner oder gleich"; } }, { key: "zwischen", get label() { return lookupLabel('technische_anforderungen', 'vergleichsoperator', "zwischen") ?? "Zwischen"; } }],
+    pruefstatus: [{ key: "ungeprueft", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "ungeprueft") ?? "Ungeprüft"; } }, { key: "zu_pruefen", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "zu_pruefen") ?? "Zu prüfen"; } }, { key: "bestaetigt", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "bestaetigt") ?? "Bestätigt"; } }, { key: "unklar", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "unklar") ?? "Unklar"; } }, { key: "widerspruechlich", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "widerspruechlich") ?? "Widersprüchlich"; } }, { key: "nicht_erfuellt", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "nicht_erfuellt") ?? "Nicht erfüllt"; } }, { key: "nicht_anwendbar", get label() { return lookupLabel('technische_anforderungen', 'pruefstatus', "nicht_anwendbar") ?? "Nicht anwendbar"; } }],
+  },
+  'offene_punkte': {
+    punktetyp: [{ key: "fehlende_information", get label() { return lookupLabel('offene_punkte', 'punktetyp', "fehlende_information") ?? "Fehlende Information"; } }, { key: "widerspruch", get label() { return lookupLabel('offene_punkte', 'punktetyp', "widerspruch") ?? "Widerspruch"; } }, { key: "technische_pruefung", get label() { return lookupLabel('offene_punkte', 'punktetyp', "technische_pruefung") ?? "Technische Prüfung"; } }, { key: "normenpruefung", get label() { return lookupLabel('offene_punkte', 'punktetyp', "normenpruefung") ?? "Normenprüfung"; } }, { key: "machbarkeit", get label() { return lookupLabel('offene_punkte', 'punktetyp', "machbarkeit") ?? "Machbarkeit"; } }, { key: "risiko", get label() { return lookupLabel('offene_punkte', 'punktetyp', "risiko") ?? "Risiko"; } }, { key: "rueckfrage", get label() { return lookupLabel('offene_punkte', 'punktetyp', "rueckfrage") ?? "Rückfrage"; } }, { key: "freigabe", get label() { return lookupLabel('offene_punkte', 'punktetyp', "freigabe") ?? "Freigabe"; } }, { key: "sonstiges", get label() { return lookupLabel('offene_punkte', 'punktetyp', "sonstiges") ?? "Sonstiges"; } }],
+    prioritaet: [{ key: "niedrig", get label() { return lookupLabel('offene_punkte', 'prioritaet', "niedrig") ?? "Niedrig"; } }, { key: "normal", get label() { return lookupLabel('offene_punkte', 'prioritaet', "normal") ?? "Normal"; } }, { key: "hoch", get label() { return lookupLabel('offene_punkte', 'prioritaet', "hoch") ?? "Hoch"; } }, { key: "kritisch", get label() { return lookupLabel('offene_punkte', 'prioritaet', "kritisch") ?? "Kritisch"; } }],
+    auswirkung: [{ key: "qualitaet", get label() { return lookupLabel('offene_punkte', 'auswirkung', "qualitaet") ?? "Qualität"; } }, { key: "sicherheit", get label() { return lookupLabel('offene_punkte', 'auswirkung', "sicherheit") ?? "Sicherheit"; } }, { key: "funktion", get label() { return lookupLabel('offene_punkte', 'auswirkung', "funktion") ?? "Funktion"; } }, { key: "kosten", get label() { return lookupLabel('offene_punkte', 'auswirkung', "kosten") ?? "Kosten"; } }, { key: "termin", get label() { return lookupLabel('offene_punkte', 'auswirkung', "termin") ?? "Termin"; } }, { key: "herstellbarkeit", get label() { return lookupLabel('offene_punkte', 'auswirkung', "herstellbarkeit") ?? "Herstellbarkeit"; } }, { key: "normenkonformitaet", get label() { return lookupLabel('offene_punkte', 'auswirkung', "normenkonformitaet") ?? "Normenkonformität"; } }, { key: "sonstiges", get label() { return lookupLabel('offene_punkte', 'auswirkung', "sonstiges") ?? "Sonstiges"; } }],
+    zustaendige_rolle: [{ key: "vertrieb", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "vertrieb") ?? "Vertrieb"; } }, { key: "konstruktion", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "konstruktion") ?? "Konstruktion"; } }, { key: "arbeitsvorbereitung", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "arbeitsvorbereitung") ?? "Arbeitsvorbereitung"; } }, { key: "qualitaetssicherung", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "qualitaetssicherung") ?? "Qualitätssicherung"; } }, { key: "fertigung", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "fertigung") ?? "Fertigung"; } }, { key: "einkauf", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "einkauf") ?? "Einkauf"; } }, { key: "technische_leitung", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "technische_leitung") ?? "Technische Leitung"; } }, { key: "sonstige", get label() { return lookupLabel('offene_punkte', 'zustaendige_rolle', "sonstige") ?? "Sonstige"; } }],
+    status: [{ key: "erledigt", get label() { return lookupLabel('offene_punkte', 'status', "erledigt") ?? "Erledigt"; } }, { key: "entschieden_akzeptiert", get label() { return lookupLabel('offene_punkte', 'status', "entschieden_akzeptiert") ?? "Entschieden akzeptiert"; } }, { key: "nicht_mehr_relevant", get label() { return lookupLabel('offene_punkte', 'status', "nicht_mehr_relevant") ?? "Nicht mehr relevant"; } }, { key: "neu", get label() { return lookupLabel('offene_punkte', 'status', "neu") ?? "Neu"; } }, { key: "zugewiesen", get label() { return lookupLabel('offene_punkte', 'status', "zugewiesen") ?? "Zugewiesen"; } }, { key: "in_bearbeitung", get label() { return lookupLabel('offene_punkte', 'status', "in_bearbeitung") ?? "In Bearbeitung"; } }, { key: "wartet_kunde", get label() { return lookupLabel('offene_punkte', 'status', "wartet_kunde") ?? "Wartet auf Kunde"; } }, { key: "wartet_intern", get label() { return lookupLabel('offene_punkte', 'status', "wartet_intern") ?? "Wartet intern"; } }, { key: "zur_entscheidung", get label() { return lookupLabel('offene_punkte', 'status', "zur_entscheidung") ?? "Zur Entscheidung"; } }],
+  },
+  'aufgaben': {
+    aufgabentyp: [{ key: "technische_bewertung", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "technische_bewertung") ?? "Technische Bewertung"; } }, { key: "kundenrueckfrage", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "kundenrueckfrage") ?? "Kundenrückfrage"; } }, { key: "interne_rueckfrage", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "interne_rueckfrage") ?? "Interne Rückfrage"; } }, { key: "normenpruefung", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "normenpruefung") ?? "Normenprüfung"; } }, { key: "machbarkeitspruefung", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "machbarkeitspruefung") ?? "Machbarkeitsprüfung"; } }, { key: "dokumentation", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "dokumentation") ?? "Dokumentation"; } }, { key: "entscheidung_vorbereiten", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "entscheidung_vorbereiten") ?? "Entscheidung vorbereiten"; } }, { key: "freigabepruefung", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "freigabepruefung") ?? "Freigabeprüfung"; } }, { key: "sonstiges", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "sonstiges") ?? "Sonstiges"; } }, { key: "informationspruefung", get label() { return lookupLabel('aufgaben', 'aufgabentyp', "informationspruefung") ?? "Informationsprüfung"; } }],
+    prioritaet: [{ key: "niedrig", get label() { return lookupLabel('aufgaben', 'prioritaet', "niedrig") ?? "Niedrig"; } }, { key: "normal", get label() { return lookupLabel('aufgaben', 'prioritaet', "normal") ?? "Normal"; } }, { key: "hoch", get label() { return lookupLabel('aufgaben', 'prioritaet', "hoch") ?? "Hoch"; } }, { key: "kritisch", get label() { return lookupLabel('aufgaben', 'prioritaet', "kritisch") ?? "Kritisch"; } }],
+    status: [{ key: "offen", get label() { return lookupLabel('aufgaben', 'status', "offen") ?? "Offen"; } }, { key: "in_bearbeitung", get label() { return lookupLabel('aufgaben', 'status', "in_bearbeitung") ?? "In Bearbeitung"; } }, { key: "blockiert", get label() { return lookupLabel('aufgaben', 'status', "blockiert") ?? "Blockiert"; } }, { key: "wartet_antwort", get label() { return lookupLabel('aufgaben', 'status', "wartet_antwort") ?? "Wartet auf Antwort"; } }, { key: "erledigt", get label() { return lookupLabel('aufgaben', 'status', "erledigt") ?? "Erledigt"; } }, { key: "abgebrochen", get label() { return lookupLabel('aufgaben', 'status', "abgebrochen") ?? "Abgebrochen"; } }],
+  },
+  'beurteilungen': {
+    beurteilungsart: [{ key: "machbarkeit", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "machbarkeit") ?? "Technische Machbarkeit"; } }, { key: "vollstaendigkeit", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "vollstaendigkeit") ?? "Vollständigkeit"; } }, { key: "risiko", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "risiko") ?? "Risiko"; } }, { key: "qualitaet", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "qualitaet") ?? "Qualität"; } }, { key: "normenkonformitaet", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "normenkonformitaet") ?? "Normenkonformität"; } }, { key: "termin", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "termin") ?? "Termin"; } }, { key: "kostenwirkung", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "kostenwirkung") ?? "Kostenwirkung"; } }, { key: "herstellbarkeit", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "herstellbarkeit") ?? "Herstellbarkeit"; } }, { key: "sonstiges", get label() { return lookupLabel('beurteilungen', 'beurteilungsart', "sonstiges") ?? "Sonstiges"; } }],
+    einschaetzung: [{ key: "positiv", get label() { return lookupLabel('beurteilungen', 'einschaetzung', "positiv") ?? "Positiv"; } }, { key: "bedingt_positiv", get label() { return lookupLabel('beurteilungen', 'einschaetzung', "bedingt_positiv") ?? "Bedingt positiv"; } }, { key: "negativ", get label() { return lookupLabel('beurteilungen', 'einschaetzung', "negativ") ?? "Negativ"; } }, { key: "unklar", get label() { return lookupLabel('beurteilungen', 'einschaetzung', "unklar") ?? "Unklar"; } }, { key: "nicht_anwendbar", get label() { return lookupLabel('beurteilungen', 'einschaetzung', "nicht_anwendbar") ?? "Nicht anwendbar"; } }],
+    pruefstatus: [{ key: "entwurf", get label() { return lookupLabel('beurteilungen', 'pruefstatus', "entwurf") ?? "Entwurf"; } }, { key: "fachlich_geprueft", get label() { return lookupLabel('beurteilungen', 'pruefstatus', "fachlich_geprueft") ?? "Fachlich geprüft"; } }, { key: "bestaetigt", get label() { return lookupLabel('beurteilungen', 'pruefstatus', "bestaetigt") ?? "Bestätigt"; } }, { key: "ueberholt", get label() { return lookupLabel('beurteilungen', 'pruefstatus', "ueberholt") ?? "Überholt"; } }],
+  },
+  'rueckfragen_und_kommunikation': {
+    kommunikationstyp: [{ key: "interne_anfrage", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kommunikationstyp', "interne_anfrage") ?? "Interne Anfrage"; } }, { key: "antwort", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kommunikationstyp', "antwort") ?? "Antwort"; } }, { key: "information", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kommunikationstyp', "information") ?? "Information"; } }, { key: "eskalation", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kommunikationstyp', "eskalation") ?? "Eskalation"; } }, { key: "gespraechsprotokoll", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kommunikationstyp', "gespraechsprotokoll") ?? "Gesprächsprotokoll"; } }, { key: "kundenrueckfrage", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kommunikationstyp', "kundenrueckfrage") ?? "Kundenrückfrage"; } }],
+    kanal: [{ key: "email", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kanal', "email") ?? "E-Mail"; } }, { key: "telefon", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kanal', "telefon") ?? "Telefon"; } }, { key: "besprechung", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kanal', "besprechung") ?? "Besprechung"; } }, { key: "chat", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kanal', "chat") ?? "Chat"; } }, { key: "persoenlich", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kanal', "persoenlich") ?? "Persönliches Gespräch"; } }, { key: "sonstiges", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'kanal', "sonstiges") ?? "Sonstiges"; } }],
+    versandstatus: [{ key: "entwurf", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'versandstatus', "entwurf") ?? "Entwurf"; } }, { key: "zur_pruefung", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'versandstatus', "zur_pruefung") ?? "Zur Prüfung"; } }, { key: "freigegeben", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'versandstatus', "freigegeben") ?? "Freigegeben"; } }, { key: "versendet", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'versandstatus', "versendet") ?? "Versendet"; } }, { key: "fehlgeschlagen", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'versandstatus', "fehlgeschlagen") ?? "Fehlgeschlagen"; } }, { key: "nicht_erforderlich", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'versandstatus', "nicht_erforderlich") ?? "Nicht erforderlich"; } }],
+    antwortstatus: [{ key: "offen", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'antwortstatus', "offen") ?? "Offen"; } }, { key: "teilweise", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'antwortstatus', "teilweise") ?? "Teilweise beantwortet"; } }, { key: "beantwortet", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'antwortstatus', "beantwortet") ?? "Beantwortet"; } }, { key: "unklar", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'antwortstatus', "unklar") ?? "Unklar"; } }, { key: "widerspruechlich", get label() { return lookupLabel('rueckfragen_und_kommunikation', 'antwortstatus', "widerspruechlich") ?? "Widersprüchlich"; } }],
+  },
+  'entscheidungen': {
+    entscheidungstyp: [{ key: "technische_freigabe", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "technische_freigabe") ?? "Technische Freigabe"; } }, { key: "abweichung_akzeptieren", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "abweichung_akzeptieren") ?? "Abweichung akzeptieren"; } }, { key: "alternative", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "alternative") ?? "Alternative auswählen"; } }, { key: "anforderung_aendern", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "anforderung_aendern") ?? "Anforderung ändern"; } }, { key: "risiko_akzeptieren", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "risiko_akzeptieren") ?? "Risiko akzeptieren"; } }, { key: "rueckfrage_abschliessen", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "rueckfrage_abschliessen") ?? "Rückfrage abschließen"; } }, { key: "ablehnung", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "ablehnung") ?? "Ablehnung"; } }, { key: "eskalation", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "eskalation") ?? "Eskalation"; } }, { key: "sonstiges", get label() { return lookupLabel('entscheidungen', 'entscheidungstyp', "sonstiges") ?? "Sonstiges"; } }],
+    entscheidungsstatus: [{ key: "vorbereitung", get label() { return lookupLabel('entscheidungen', 'entscheidungsstatus', "vorbereitung") ?? "Vorbereitung"; } }, { key: "zur_entscheidung", get label() { return lookupLabel('entscheidungen', 'entscheidungsstatus', "zur_entscheidung") ?? "Zur Entscheidung"; } }, { key: "entschieden", get label() { return lookupLabel('entscheidungen', 'entscheidungsstatus', "entschieden") ?? "Entschieden"; } }, { key: "zurueckgestellt", get label() { return lookupLabel('entscheidungen', 'entscheidungsstatus', "zurueckgestellt") ?? "Zurückgestellt"; } }, { key: "ersetzt", get label() { return lookupLabel('entscheidungen', 'entscheidungsstatus', "ersetzt") ?? "Ersetzt"; } }],
+  },
+  'erfahrungen_und_erkenntnisse': {
+    erfahrungstyp: [{ key: "erfahrung", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'erfahrungstyp', "erfahrung") ?? "Erfahrung"; } }, { key: "annahme", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'erfahrungstyp', "annahme") ?? "Annahme"; } }, { key: "experiment", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'erfahrungstyp', "experiment") ?? "Experiment"; } }, { key: "wirkung", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'erfahrungstyp', "wirkung") ?? "Wirkung"; } }, { key: "bewaehrt", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'erfahrungstyp', "bewaehrt") ?? "Bewährte Vorgehensweise"; } }, { key: "beobachtung", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'erfahrungstyp', "beobachtung") ?? "Beobachtung"; } }],
+    risiko_der_uebertragung: [{ key: "niedrig", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'risiko_der_uebertragung', "niedrig") ?? "Niedrig"; } }, { key: "mittel", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'risiko_der_uebertragung', "mittel") ?? "Mittel"; } }, { key: "hoch", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'risiko_der_uebertragung', "hoch") ?? "Hoch"; } }, { key: "unbekannt", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'risiko_der_uebertragung', "unbekannt") ?? "Unbekannt"; } }],
+    bestaetigungsstatus: [{ key: "ungeprueft", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'bestaetigungsstatus', "ungeprueft") ?? "Ungeprüft"; } }, { key: "vorlaeufig", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'bestaetigungsstatus', "vorlaeufig") ?? "Vorläufig"; } }, { key: "fachlich_bestaetigt", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'bestaetigungsstatus', "fachlich_bestaetigt") ?? "Fachlich bestätigt"; } }, { key: "wiederholt_bestaetigt", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'bestaetigungsstatus', "wiederholt_bestaetigt") ?? "Wiederholt bestätigt"; } }, { key: "widerlegt", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'bestaetigungsstatus', "widerlegt") ?? "Widerlegt"; } }, { key: "ueberholt", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'bestaetigungsstatus', "ueberholt") ?? "Überholt"; } }],
+    wiederverwendungsstatus: [{ key: "nicht_geprueft", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'wiederverwendungsstatus', "nicht_geprueft") ?? "Nicht geprüft"; } }, { key: "verfuegbar", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'wiederverwendungsstatus', "verfuegbar") ?? "Für Wiederverwendung verfügbar"; } }, { key: "nur_hinweis", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'wiederverwendungsstatus', "nur_hinweis") ?? "Nur als Hinweis verwenden"; } }, { key: "nicht_mehr", get label() { return lookupLabel('erfahrungen_und_erkenntnisse', 'wiederverwendungsstatus', "nicht_mehr") ?? "Nicht mehr verwenden"; } }],
+  },
+  'wiederverwendung_von_erfahrungen': {
+    aehnlichkeitseinschaetzung: [{ key: "hoch", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'aehnlichkeitseinschaetzung', "hoch") ?? "Hoch"; } }, { key: "mittel", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'aehnlichkeitseinschaetzung', "mittel") ?? "Mittel"; } }, { key: "niedrig", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'aehnlichkeitseinschaetzung', "niedrig") ?? "Niedrig"; } }, { key: "unklar", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'aehnlichkeitseinschaetzung', "unklar") ?? "Unklar"; } }],
+    verwendungsergebnis: [{ key: "verwendet", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'verwendungsergebnis', "verwendet") ?? "Verwendet"; } }, { key: "teilweise", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'verwendungsergebnis', "teilweise") ?? "Teilweise verwendet"; } }, { key: "nicht_verwendet", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'verwendungsergebnis', "nicht_verwendet") ?? "Nicht verwendet"; } }, { key: "ungeeignet", get label() { return lookupLabel('wiederverwendung_von_erfahrungen', 'verwendungsergebnis', "ungeeignet") ?? "Als ungeeignet erkannt"; } }],
+  },
+};
+
+// Optimistic LookupValue writes: never re-type a label — resolve the schema
+// option instead (its label is a locale-aware getter; falls back to the key).
+// WRONG: status: { key: 'offen', label: 'Offen' }   (frozen in one language)
+// RIGHT: status: lookupOption('<appKey>', 'status', 'offen')
+export function lookupOption(app: string, field: string, key: string): LookupValue {
+  return LOOKUP_OPTIONS[app]?.[field]?.find(o => o.key === key) ?? { key, label: key };
+}
+
+export const FIELD_TYPES: Record<string, Record<string, string>> = {
+  'kunden': {
+    'kundennummer': 'string/text',
+    'firmenname': 'string/text',
+    'ansprechpartner_vorname': 'string/text',
+    'ansprechpartner_nachname': 'string/text',
+    'e_mail': 'string/email',
+    'telefon': 'string/tel',
+    'strasse': 'string/text',
+    'hausnummer': 'string/text',
+    'plz': 'string/text',
+    'ort': 'string/text',
+    'branche': 'string/text',
+    'interne_bemerkung': 'string/textarea',
+    'aktiv': 'bool',
+  },
+  'kundenanfragen': {
+    'urspruengliche_kundenanforderungen': 'string/textarea',
+    'prioritaet': 'lookup/select',
+    'verantwortlicher': 'string/text',
+    'status': 'lookup/select',
+    'technischer_klaeraufwand': 'lookup/radio',
+    'zieltermin_klaerung': 'date/date',
+    'vollstaendigkeit': 'lookup/select',
+    'hinweise_erneute_pruefung': 'bool',
+    'aktive_bearbeitungszeit_min': 'number',
+    'wartezeit_kunde_min': 'number',
+    'wartezeit_intern_min': 'number',
+    'nacharbeiten_anzahl': 'number',
+    'klaerung_abgeschlossen_am': 'date/date',
+    'anfragenummer': 'string/text',
+    'kunde': 'applookup/select',
+    'eingangsdatum': 'date/date',
+    'eingangskanal': 'lookup/select',
+    'kundenreferenz': 'string/text',
+    'produkt_oder_produktfamilie': 'string/text',
+    'produktvariante': 'string/text',
+    'gewuenschte_menge': 'number',
+    'gewuenschter_liefertermin': 'date/date',
+    'anfragebeschreibung': 'string/textarea',
+  },
+  'abschluss_und_uebergabe': {
+    'anfrage': 'applookup/select',
+    'pruefdatum': 'date/datetimeminute',
+    'geprueft_von': 'string/text',
+    'anforderungen_geprueft': 'bool',
+    'kritische_punkte_geklaert': 'bool',
+    'erforderliche_entscheidungen_vorhanden': 'bool',
+    'erforderliche_freigaben_vorhanden': 'bool',
+    'verbleibende_abweichungen': 'string/textarea',
+    'uebergabeempfaenger': 'string/text',
+    'uebergabestatus': 'lookup/select',
+    'verbleibende_risiken': 'string/textarea',
+    'uebergabedatum': 'date/datetimeminute',
+    'zusammenfassung': 'string/textarea',
+    'freigabestatus': 'lookup/select',
+  },
+  'informationsquellen': {
+    'quellentyp': 'lookup/select',
+    'titel': 'string/text',
+    'datei': 'file',
+    'referenz_url': 'string/url',
+    'absender_oder_urheber': 'string/text',
+    'quellendatum': 'date/date',
+    'eingangsdatum': 'date/datetimeminute',
+    'versionskennung': 'string/text',
+    'anfrage': 'applookup/select',
+    'quellenstatus': 'lookup/select',
+    'zusammenfassung': 'string/textarea',
+    'extraktionsstatus': 'lookup/select',
+    'pruefung_durch': 'string/text',
+    'pruefung_am': 'date/datetimeminute',
+    'erneute_pruefung_erforderlich': 'bool',
+    'bemerkung': 'string/textarea',
+    'ersetzt_quelle': 'applookup/select',
+  },
+  'technische_anforderungen': {
+    'quellen': 'multipleapplookup/select',
+    'anfrage': 'applookup/select',
+    'bezeichnung': 'string/text',
+    'beschreibung': 'string/textarea',
+    'anforderungstyp': 'lookup/select',
+    'ursprung': 'lookup/select',
+    'sollwert': 'string/text',
+    'einheit': 'string/text',
+    'vergleichsoperator': 'lookup/select',
+    'min_wert': 'number',
+    'max_wert': 'number',
+    'ist_pflichtanforderung': 'bool',
+    'pruefstatus': 'lookup/select',
+    'begruendung_pruefstatus': 'string/textarea',
+    'verantwortlicher': 'string/text',
+    'gueltig_ab': 'date/date',
+    'gueltig_bis': 'date/date',
+    'erneute_pruefung_erforderlich': 'bool',
+    'letzte_aenderung': 'date/datetimeminute',
+  },
+  'offene_punkte': {
+    'betroffene_anforderungen': 'multipleapplookup/select',
+    'anfrage': 'applookup/select',
+    'kurztitel': 'string/text',
+    'beschreibung': 'string/textarea',
+    'punktetyp': 'lookup/select',
+    'prioritaet': 'lookup/select',
+    'auswirkung': 'lookup/select',
+    'zustaendige_rolle': 'lookup/select',
+    'verantwortlicher': 'string/text',
+    'faellig_am': 'date/date',
+    'status': 'lookup/select',
+    'erledigungskriterium': 'string/textarea',
+    'antwort_geprueft': 'bool',
+    'erneute_pruefung_erforderlich': 'bool',
+    'loesung_oder_ergebnis': 'string/textarea',
+    'abgeschlossen_am': 'date/datetimeminute',
+    'abschluss_durch': 'string/text',
+    'betroffene_quellen': 'multipleapplookup/select',
+  },
+  'aufgaben': {
+    'offener_punkt': 'applookup/select',
+    'abhaengige_aufgaben': 'multipleapplookup/select',
+    'anfrage': 'applookup/select',
+    'titel': 'string/text',
+    'beschreibung': 'string/textarea',
+    'aufgabentyp': 'lookup/select',
+    'verantwortlicher': 'string/text',
+    'mitwirkende': 'string/text',
+    'prioritaet': 'lookup/select',
+    'status': 'lookup/select',
+    'faellig_am': 'date/date',
+    'blockierungsgrund': 'string/textarea',
+    'ergebnis': 'string/textarea',
+    'aktive_zeit_min': 'number',
+    'wartezeit_min': 'number',
+    'abgeschlossen_am': 'date/datetimeminute',
+  },
+  'beurteilungen': {
+    'anfrage': 'applookup/select',
+    'beurteilungsgegenstand': 'string/text',
+    'beurteilungsart': 'lookup/select',
+    'fachliche_begruendung': 'string/textarea',
+    'annahmen': 'string/textarea',
+    'einschaetzung': 'lookup/select',
+    'unsicherheiten': 'string/textarea',
+    'alternativen': 'string/textarea',
+    'empfehlung': 'string/textarea',
+    'ist_ki_vorschlag': 'bool',
+    'erstellt_von': 'string/text',
+    'erstellt_am': 'date/datetimeminute',
+    'pruefstatus': 'lookup/select',
+    'geprueft_von': 'string/text',
+    'geprueft_am': 'date/datetimeminute',
+    'erneute_pruefung_erforderlich': 'bool',
+    'betroffene_anforderungen': 'multipleapplookup/select',
+    'betroffene_offene_punkte': 'multipleapplookup/select',
+    'zugrunde_liegende_quellen': 'multipleapplookup/select',
+    'zugrunde_liegende_anforderungen': 'multipleapplookup/select',
+  },
+  'rueckfragen_und_kommunikation': {
+    'offener_punkt': 'applookup/select',
+    'zugehoerige_offene_punkte': 'multipleapplookup/select',
+    'beantwortete_kommunikation': 'applookup/select',
+    'quelle': 'applookup/select',
+    'anfrage': 'applookup/select',
+    'kommunikationstyp': 'lookup/select',
+    'kanal': 'lookup/select',
+    'absender': 'string/text',
+    'empfaenger': 'string/text',
+    'betreff': 'string/text',
+    'inhalt': 'string/textarea',
+    'versandstatus': 'lookup/select',
+    'versanddatum': 'date/datetimeminute',
+    'antwort_erwartet_bis': 'date/date',
+    'antwort_erhalten_am': 'date/datetimeminute',
+    'antwortstatus': 'lookup/select',
+    'notizen': 'string/textarea',
+  },
+  'entscheidungen': {
+    'anfrage': 'applookup/select',
+    'titel': 'string/text',
+    'entscheidungsgegenstand': 'string/textarea',
+    'entscheidungstyp': 'lookup/select',
+    'alternativen': 'string/textarea',
+    'entscheidung': 'string/textarea',
+    'begruendung': 'string/textarea',
+    'entscheidungsverantwortlicher': 'string/text',
+    'entscheidungskompetenz_geprueft': 'bool',
+    'entscheidungsstatus': 'lookup/select',
+    'entscheidungsdatum': 'date/datetimeminute',
+    'auflagen': 'string/textarea',
+    'gueltig_bis': 'date/date',
+    'ergebnis': 'string/textarea',
+    'betroffene_anforderungen': 'multipleapplookup/select',
+    'betroffene_offene_punkte': 'multipleapplookup/select',
+    'zugrunde_liegende_beurteilungen': 'multipleapplookup/select',
+    'ersetzt_durch_entscheidung': 'applookup/select',
+  },
+  'erfahrungen_und_erkenntnisse': {
+    'belegquellen': 'multipleapplookup/select',
+    'belegbeurteilungen': 'multipleapplookup/select',
+    'belegentscheidungen': 'multipleapplookup/select',
+    'titel': 'string/text',
+    'sachverhalt': 'string/textarea',
+    'erfahrungstyp': 'lookup/select',
+    'produkt_oder_produktfamilie': 'string/text',
+    'anforderungstyp': 'string/text',
+    'schlagwoerter': 'string/text',
+    'ursprungs_anfrage': 'applookup/select',
+    'urspruengliches_problem': 'string/textarea',
+    'vorgehen': 'string/textarea',
+    'beobachtetes_ergebnis': 'string/textarea',
+    'erkenntnis': 'string/textarea',
+    'gueltigkeitsbedingungen': 'string/textarea',
+    'bekannte_grenzen': 'string/textarea',
+    'risiko_der_uebertragung': 'lookup/select',
+    'bestaetigungsstatus': 'lookup/select',
+    'bestaetigt_von': 'string/text',
+    'bestaetigt_am': 'date/date',
+    'gueltig_ab': 'date/date',
+    'gueltig_bis': 'date/date',
+    'wiederverwendungsstatus': 'lookup/select',
+    'kommentar_zur_wiederverwendung': 'string/textarea',
+  },
+  'wiederverwendung_von_erfahrungen': {
+    'aufwandsersparnis_schaetzung_min': 'number',
+    'tatsaechliche_aufwandsersparnis_min': 'number',
+    'negative_folgen': 'string/textarea',
+    'bewertet_am': 'date/date',
+    'ziel_anfrage': 'applookup/select',
+    'abrufdatum': 'date/datetimeminute',
+    'abrufgrund': 'string/textarea',
+    'aehnlichkeitseinschaetzung': 'lookup/select',
+    'kontextunterschiede': 'string/textarea',
+    'gueltigkeit_geprueft': 'bool',
+    'geprueft_von': 'string/text',
+    'verwendungsergebnis': 'lookup/select',
+    'begruendung': 'string/textarea',
+    'beobachteter_nutzen': 'string/textarea',
+    'erfahrung': 'applookup/select',
+  },
+};
+
+export const HUB_TOPOLOGY: Record<string, { field: string; entity: string }[]> = {
+  'kundenanfragen': [
+    { field: 'anfrage', entity: 'abschluss_und_uebergabe' },
+    { field: 'anfrage', entity: 'informationsquellen' },
+    { field: 'anfrage', entity: 'technische_anforderungen' },
+    { field: 'anfrage', entity: 'offene_punkte' },
+    { field: 'anfrage', entity: 'aufgaben' },
+    { field: 'anfrage', entity: 'beurteilungen' },
+    { field: 'anfrage', entity: 'rueckfragen_und_kommunikation' },
+    { field: 'anfrage', entity: 'entscheidungen' },
+    { field: 'ursprungs_anfrage', entity: 'erfahrungen_und_erkenntnisse' },
+    { field: 'ziel_anfrage', entity: 'wiederverwendung_von_erfahrungen' },
+  ],
+  'informationsquellen': [
+    { field: 'quellen', entity: 'technische_anforderungen' },
+    { field: 'betroffene_quellen', entity: 'offene_punkte' },
+    { field: 'zugrunde_liegende_quellen', entity: 'beurteilungen' },
+    { field: 'quelle', entity: 'rueckfragen_und_kommunikation' },
+    { field: 'belegquellen', entity: 'erfahrungen_und_erkenntnisse' },
+  ],
+  'technische_anforderungen': [
+    { field: 'betroffene_anforderungen', entity: 'offene_punkte' },
+    { field: 'betroffene_anforderungen', entity: 'beurteilungen' },
+    { field: 'zugrunde_liegende_anforderungen', entity: 'beurteilungen' },
+    { field: 'betroffene_anforderungen', entity: 'entscheidungen' },
+  ],
+  'offene_punkte': [
+    { field: 'offener_punkt', entity: 'aufgaben' },
+    { field: 'betroffene_offene_punkte', entity: 'beurteilungen' },
+    { field: 'offener_punkt', entity: 'rueckfragen_und_kommunikation' },
+    { field: 'zugehoerige_offene_punkte', entity: 'rueckfragen_und_kommunikation' },
+    { field: 'betroffene_offene_punkte', entity: 'entscheidungen' },
+  ],
+};
+
+type StripLookup<T> = {
+  [K in keyof T]: T[K] extends LookupValue | undefined ? string | LookupValue | undefined
+    : T[K] extends LookupValue[] | undefined ? string[] | LookupValue[] | undefined
+    : T[K];
+};
+
+// Helper Types for creating new records (lookup fields as plain strings for API)
+export type CreateKunden = StripLookup<Kunden['fields']>;
+export type CreateKundenanfragen = StripLookup<Kundenanfragen['fields']>;
+export type CreateAbschlussUndUebergabe = StripLookup<AbschlussUndUebergabe['fields']>;
+export type CreateInformationsquellen = StripLookup<Informationsquellen['fields']>;
+export type CreateTechnischeAnforderungen = StripLookup<TechnischeAnforderungen['fields']>;
+export type CreateOffenePunkte = StripLookup<OffenePunkte['fields']>;
+export type CreateAufgaben = StripLookup<Aufgaben['fields']>;
+export type CreateBeurteilungen = StripLookup<Beurteilungen['fields']>;
+export type CreateRueckfragenUndKommunikation = StripLookup<RueckfragenUndKommunikation['fields']>;
+export type CreateEntscheidungen = StripLookup<Entscheidungen['fields']>;
+export type CreateErfahrungenUndErkenntnisse = StripLookup<ErfahrungenUndErkenntnisse['fields']>;
+export type CreateWiederverwendungVonErfahrungen = StripLookup<WiederverwendungVonErfahrungen['fields']>;
+```

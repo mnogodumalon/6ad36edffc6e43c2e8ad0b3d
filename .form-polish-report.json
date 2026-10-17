@@ -1,0 +1,122 @@
+{
+  "entities": {
+    "Kunden": {
+      "placeholders_set": 11,
+      "defaults_keys": [
+        "aktiv"
+      ],
+      "computed_keys": [],
+      "reason": "Kundenstammdaten ohne numerische Felder, daher keine Formeln; neue Kunden sind standardmäßig aktiv."
+    },
+    "Kundenanfragen": {
+      "placeholders_set": 19,
+      "defaults_keys": [
+        "eingangsdatum",
+        "status",
+        "zieltermin_klaerung",
+        "gewuenschte_menge",
+        "vollstaendigkeit",
+        "technischer_klaeraufwand"
+      ],
+      "computed_keys": [
+        "_gesamtzeit_min"
+      ],
+      "reason": "Die Gesamtdauer in Minuten ergibt sich als Summe aus aktiver Bearbeitungszeit und beiden Wartezeiten, weitere Berechnungen gibt es nicht."
+    },
+    "Abschluss und Übergabe": {
+      "placeholders_set": 8,
+      "defaults_keys": [
+        "pruefdatum",
+        "uebergabestatus",
+        "freigabestatus"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da es keine eigenen numerischen Felder oder Datumspaare gibt und die Werte der Anfrage nicht sinnvoll verrechnet werden."
+    },
+    "Informationsquellen": {
+      "placeholders_set": 13,
+      "defaults_keys": [
+        "eingangsdatum",
+        "extraktionsstatus"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formeln, da die Informationsquellen Stammdaten ohne eigene Zahlenfelder oder Datumspaare sind."
+    },
+    "Technische Anforderungen": {
+      "placeholders_set": 17,
+      "defaults_keys": [
+        "pruefstatus",
+        "gueltig_ab",
+        "letzte_aenderung"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da Soll-, Mindest- und Höchstwerte technische Angaben sind und keine Mengen-, Preis- oder Dauerberechnung ergeben."
+    },
+    "Offene Punkte": {
+      "placeholders_set": 15,
+      "defaults_keys": [
+        "status",
+        "prioritaet",
+        "faellig_am"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formeln, da der Dialog keine eigenen Zahlenfelder oder Datumspaare mit Dauer enthält."
+    },
+    "Aufgaben": {
+      "placeholders_set": 15,
+      "defaults_keys": [
+        "status",
+        "prioritaet",
+        "faellig_am"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da die Minutenfelder gemessene Werte sind und kein Datumspaar oder Preis vorliegt."
+    },
+    "Beurteilungen": {
+      "placeholders_set": 16,
+      "defaults_keys": [
+        "erstellt_am",
+        "pruefstatus"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formeln, da das Formular nur Text, Auswahl und Datumsfelder ohne Zahlenkette oder Datumspaar enthält."
+    },
+    "Rückfragen und Kommunikation": {
+      "placeholders_set": 16,
+      "defaults_keys": [
+        "versandstatus",
+        "antwortstatus"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formeln, da das Formular keine eigenen Zahlenfelder und kein Datumspaar für eine Dauer enthält."
+    },
+    "Entscheidungen": {
+      "placeholders_set": 16,
+      "defaults_keys": [
+        "entscheidungsdatum",
+        "entscheidungsstatus"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da die Entscheidungen keine sinnvolle numerische Berechnung mit Datumspaar oder Preis enthalten."
+    },
+    "Erfahrungen und Erkenntnisse": {
+      "placeholders_set": 22,
+      "defaults_keys": [
+        "gueltig_ab",
+        "bestaetigungsstatus",
+        "wiederverwendungsstatus"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da die Wissensdatensätze keine eigenen Zahlenfelder haben und die Gültigkeitsdaten kein Dauerfeld besitzen."
+    },
+    "Wiederverwendung von Erfahrungen": {
+      "placeholders_set": 12,
+      "defaults_keys": [
+        "abrufdatum",
+        "bewertet_am"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da die Minutenwerte Schätzungen bzw. Beobachtungen sind und keine Rechenkette oder Datumspaare existieren."
+    }
+  }
+}
