@@ -20,6 +20,7 @@
 import type { ComponentType } from 'react';
 
 // <custom:intent-imports>
+import { IconInbox, IconListCheck, IconAlertTriangle, IconMessageQuestion, IconMessageCheck, IconGavel } from '@tabler/icons-react';
 // </custom:intent-imports>
 
 export interface IntentLink {
@@ -42,6 +43,12 @@ export interface IntentLink {
 
 export const INTENTS: IntentLink[] = [
   // <custom:intents>
+  { path: '/intents/anfrage-aufnehmen', label: { de: 'Kundenanfrage aufnehmen', en: 'Record customer inquiry' }, icon: IconInbox, description: 'Kunde wählen, Anfrage erfassen, erste Quelle zuordnen, Verantwortlichen und Priorität festlegen.' },
+  { path: '/intents/anforderungen-erfassen', label: { de: 'Anforderungen und Quellen erfassen', en: 'Capture requirements and sources' }, icon: IconListCheck, description: 'Technische Anforderungen anlegen, mit Quellen verknüpfen; Anfrage geht in Prüfung.' },
+  { path: '/intents/offenen-punkt-anlegen', label: { de: 'Offenen Punkt mit Aufgabe anlegen', en: 'Create open item with task' }, icon: IconAlertTriangle, description: 'Offenen Punkt dokumentieren und verantwortete Aufgabe daraus ableiten.' },
+  { path: '/intents/rueckfrage-vorbereiten', label: { de: 'Rückfrage vorbereiten', en: 'Prepare inquiry' }, icon: IconMessageQuestion, description: 'Rückfrageentwurf aus offenen Punkten erstellen; Entwurf ist kein Versand.' },
+  { path: '/intents/antwort-zuordnen', label: { de: 'Antwort zuordnen und prüfen', en: 'Assign and review reply' }, icon: IconMessageCheck, description: 'Antwort erfassen, Rückfrage zuordnen, prüfen und Punkt erst nach Prüfung abschließen.' },
+  { path: '/intents/entscheidung-dokumentieren', label: { de: 'Beurteilung und Entscheidung dokumentieren', en: 'Document assessment and decision' }, icon: IconGavel, description: 'Beurteilung festhalten und darauf gestützt eine Entscheidung dokumentieren.' },
   // </custom:intents>
 ];
 
@@ -52,7 +59,7 @@ export const INTENTS: IntentLink[] = [
  * purpose — a scaffold update resets it to false (self-healing if Phase 2
  * never ran).
  */
-export const INTENTS_PENDING = true;
+export const INTENTS_PENDING = false;
 
 /**
  * When the Phase-1 bundle was deployed (ISO, set by the service together with
